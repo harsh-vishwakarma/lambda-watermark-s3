@@ -61,13 +61,14 @@ $ awslocal lambda invoke --function-name watermark --cli-binary-format raw-in-ba
 Above command is with with example payload, S3 bucket event may have different structure than above payload.
 
 ### Create the S3 Bucket and its Notification Configuration
+We need a S3 bucket from where Image are fetched (ex: image-bucket); images are then converted and saved to a different bucket (ex: watermark-bucket). Saving to different bucket is advisable as storing converted image back to same bucket may generate a new trigger and lambda function may be called in a loop.
 Similar to our earlier Lambda function, let’s create the S3 bucket with LocalStack’s endpoint url:
 ```
-$ awslocal s3api create-bucket --bucket watermark-bucket
+$ awslocal s3api create-bucket --bucket image-bucket
 ```
 or
 ```
-$ aws --endpoint-url=http://localhost:4566 s3 mb s3://watermark-bucket
+$ aws --endpoint-url=http://localhost:4566 s3 mb s3://image-bucket
 
 ```
 
